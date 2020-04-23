@@ -85,7 +85,7 @@ TEST(funciones, pruebaNoCuadrada2){
   EXPECT_EQ(a, res);
 }
 
-TEST(funciones, decYneg){   //por pantalla imprime los mismos resultados, pero el Expect-EQ da error
+TEST(funciones, decYneg){  
 
   matriz m = {{-1.5, 1.2, 2.2},
               {5.1, -12.2, 1.1},
