@@ -4,6 +4,7 @@
 #include <fstream>
 
 using namespace std;
+vector<partido> parseDat(string path);
 
 vector<string> split(const string& str, const string& delim)
 {
@@ -21,26 +22,28 @@ vector<string> split(const string& str, const string& delim)
   return tokens;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
   std::cout << "Hello, World!" << std::endl;
+  int method = stoi(argv[1]);
+  string inputPath = argv[2];
+  string outputPath = argv[3];
+  parseDat(inputPath);
   return 0;
 }
 
 vector<partido> parseDat(string path) {
   ifstream file (path);
-  string line;
   int cantPartidos, cantEquipos;
-  if (getline(file, line)) {
-    vector<string> s = split(line, " ");
-    cantPartidos = stoi(s[1]);
-    cantEquipos = stoi(s[0]);
-  }
+  file >> cantEquipos >> cantPartidos;
 
   vector<partido> partidos = vector<partido>(cantPartidos);
-  while(getline(file, line)) {
-    vector<string> s = split(line, " ");
-    partido p(s[0], s[1], stoi(s[2]), s[3], stoi(s[4]));
-    partidos.push_back(p);
+  string fecha, equipo1, equipo2;
+  int p1, p2;
+  int i = 0;
+  while(i < cantPartidos && file >> fecha >> equipo1 >> p1 >> equipo2 >> p2) {
+    partido p(fecha, equipo1, p1, equipo2, p2);
+    partidos[i] = p;
+    i++;
   }
   file.close();
   return partidos;
