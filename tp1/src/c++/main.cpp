@@ -29,14 +29,21 @@ int main() {
 vector<partido> parseDat(string path) {
   ifstream file (path);
   string line;
+  int cantPartidos, cantEquipos;
   if (getline(file, line)) {
-    auto s = split(line, ",");
-    int cantPartidos = s.get(1), cantEquipos = s.get(0);
+    vector<string> s = split(line, " ");
+    cantPartidos = stoi(s[1]);
+    cantEquipos = stoi(s[0]);
   }
-  while(getline(file, line))
 
-  vector<partido> partidos = new vector<partido>(cantPartidos);
+  vector<partido> partidos = vector<partido>(cantPartidos);
+  while(getline(file, line)) {
+    vector<string> s = split(line, " ");
+    partido p(s[0], s[1], stoi(s[2]), s[3], stoi(s[4]));
+    partidos.push_back(p);
+  }
   file.close();
+  return partidos;
 }
 
 

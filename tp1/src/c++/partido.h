@@ -13,10 +13,15 @@ using namespace std;
 class partido {
 
 private:
+    string fecha;
     string equipo1, equipo2;
     int puntaje1, puntaje2;
 
 public:
+    partido() {}
+
+    partido(const string &fecha, const string &equipo1, int puntaje1, const string &equipo2, int puntaje2);
+
     const string &getEquipo1() const;
 
     void setEquipo1(const string &equipo1);
@@ -34,6 +39,10 @@ public:
     void setPuntaje2(int puntaje2);
 
     tuple<string, int> getGanador();
+
+    const string &getFecha() const;
+
+    void setFecha(const string &fecha);
 
 };
 

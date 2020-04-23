@@ -4,6 +4,9 @@
 
 #include "partido.h"
 
+partido::partido(const string &fecha, const string &equipo1, int puntaje1, const string &equipo2, int puntaje2) : fecha(
+        fecha), equipo1(equipo1), equipo2(equipo2), puntaje1(puntaje1), puntaje2(puntaje2) { }
+
 const string &partido::getEquipo1() const {
   return equipo1;
 }
@@ -43,4 +46,14 @@ tuple<string, int> partido::getGanador() {
   else
     ganador = tuple<string, int>(equipo2, puntaje2);
   return ganador;
+}
+
+
+
+const string &partido::getFecha() const {
+  return fecha;
+}
+
+void partido::setFecha(const string &fecha) {
+  partido::fecha = fecha;
 }
