@@ -9,10 +9,6 @@ using namespace std;
 matriz elimGauss (matriz &M){
   matriz res = M;
 
-  //for (int j = 0; j < res[0].size(); ++j) res[0][j] = res[0][j] / res[0][0]; // divido a la primer fila por la cte M[0][0]
-                                                                              // (asi la primer celda vale 1)
-  // todo:  queremos que la diagonal tenga unos? o con triangular alcanza?
-
   nat columna=0;
   nat fila=1;      //tengo que empezar a restar desde la 2da fila
   for (nat k = 0; k < res.size()-1; ++k) {  // fila pivot
