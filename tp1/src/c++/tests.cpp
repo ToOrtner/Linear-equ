@@ -96,7 +96,7 @@ TEST(funciones, decYneg){
 
   for (int i = 0; i < a.size(); ++i) { // imprimo lo que da la funcion
     for (int j = 0; j < a[0].size(); ++j) {
-      cout << a[i][j] << "  ";
+      cout <<fixed <<setprecision(9)  << a[i][j] << "  ";
     }
     cout << endl;
   }
