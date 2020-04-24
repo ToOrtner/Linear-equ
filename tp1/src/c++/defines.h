@@ -13,4 +13,6 @@ typedef double ranking_t;
 
 #define nat unsigned int
 
+const ranking_t precision = 0.0001;
+
 #endif //DEFINES_H

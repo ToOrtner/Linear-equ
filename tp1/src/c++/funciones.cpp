@@ -1,3 +1,6 @@
+#ifndef FUNCIONES_CPP
+#define FUNCIONES_CPP
+
 #include <iostream>
 #include <vector>
 
@@ -26,3 +29,5 @@ matriz elimGauss (matriz &M){
   }
   return res;
 }
+
+#endif // FUNCIONES_CPP
