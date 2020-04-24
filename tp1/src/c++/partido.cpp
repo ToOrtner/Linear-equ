@@ -43,8 +43,6 @@ string partido::getGanador() {
   return puntaje1 > puntaje2 ? equipo1 : equipo2;
 }
 
-
-
 const string &partido::getFecha() const {
   return fecha;
 }

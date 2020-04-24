@@ -18,8 +18,6 @@ private:
     int puntaje1, puntaje2;
 
 public:
-    partido() {}
-
     partido(const string &fecha, const string &equipo1, int puntaje1, const string &equipo2, int puntaje2);
 
     const string &getEquipo1() const;

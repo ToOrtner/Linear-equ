@@ -30,13 +30,13 @@ Season parseDat(const string &path) {
   unsigned int cantPartidos, cantEquipos;
   file >> cantEquipos >> cantPartidos;
 
-  vector<partido> partidos = vector<partido>(cantPartidos);
+  vector<partido> partidos = vector<partido>();
   string fecha, equipo1, equipo2;
   int p1, p2;
   int i = 0;
   while(i < cantPartidos && file >> fecha >> equipo1 >> p1 >> equipo2 >> p2) {
     partido p(fecha, equipo1, p1, equipo2, p2);
-    partidos[i] = p;
+    partidos.push_back(p);
     i++;
   }
   file.close();
