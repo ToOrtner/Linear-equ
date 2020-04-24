@@ -38,7 +38,7 @@ public:
 
     void setPuntaje2(int puntaje2);
 
-    tuple<string, int> getGanador();
+    string getGanador();
 
     const string &getFecha() const;
 

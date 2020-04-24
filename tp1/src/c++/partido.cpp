@@ -39,13 +39,8 @@ void partido::setPuntaje2(int puntaje2) {
   partido::puntaje2 = puntaje2;
 }
 
-tuple<string, int> partido::getGanador() {
-  tuple<string, int> ganador;
-  if (puntaje1 > puntaje2)
-    ganador = tuple<string, int>(equipo1, puntaje1);
-  else
-    ganador = tuple<string, int>(equipo2, puntaje2);
-  return ganador;
+string partido::getGanador() {
+  return puntaje1 > puntaje2 ? equipo1 : equipo2;
 }
 
 
