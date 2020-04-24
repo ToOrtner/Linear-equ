@@ -18,13 +18,9 @@ private:
   vector<ranking_t> b;
 
 public:
-  Season();
-
   Season(int cantPartidos, int cantEquipos, vector<partido> partidos);
 
 };
-
-Season::Season() {}
 
 Season::Season(int cantPartidos, int cantEquipos, vector<partido> partidos):
       _cantPartidos(cantPartidos), _cantEquipos(cantEquipos), _partidos(std::move(partidos)) {
