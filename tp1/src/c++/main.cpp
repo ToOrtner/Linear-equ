@@ -1,39 +1,33 @@
 #include <iostream>
 #include <vector>
-#include "partido.h"
 #include <fstream>
+#include "partido.h"
+#include "defines.h"
+#include "Season.hpp"
 
 using namespace std;
-vector<partido> parseDat(string path);
 
-vector<string> split(const string& str, const string& delim)
-{
-  vector<string> tokens;
-  size_t prev = 0, pos = 0;
-  do
-  {
-    pos = str.find(delim, prev);
-    if (pos == string::npos) pos = str.length();
-    string token = str.substr(prev, pos-prev);
-    if (!token.empty()) tokens.push_back(token);
-    prev = pos + delim.length();
-  }
-  while (pos < str.length() && prev < str.length());
-  return tokens;
-}
+
+Season parseDat(const string &path);
 
 int main(int argc, char* argv[]) {
-  std::cout << "Hello, World!" << std::endl;
   int method = stoi(argv[1]);
   string inputPath = argv[2];
   string outputPath = argv[3];
-  parseDat(inputPath);
+
+  Season season = parseDat(inputPath);
+
   return 0;
 }
 
-vector<partido> parseDat(string path) {
+/**
+ * Read the file and generate array with all games
+ * @param path
+ * @return
+ */
+Season parseDat(const string &path) {
   ifstream file (path);
-  int cantPartidos, cantEquipos;
+  unsigned int cantPartidos, cantEquipos;
   file >> cantEquipos >> cantPartidos;
 
   vector<partido> partidos = vector<partido>(cantPartidos);
@@ -46,7 +40,6 @@ vector<partido> parseDat(string path) {
     i++;
   }
   file.close();
-  return partidos;
+
+  return Season(cantPartidos, cantEquipos, partidos);
 }
-
-

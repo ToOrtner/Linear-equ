@@ -6,7 +6,15 @@ add_subdirectory(google-test)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(tp1 src/c++/main.cpp src/c++/partido.cpp src/c++/partido.h src/c++/funciones.cpp)
+add_executable(
+    tp1
+    src/c++/main.cpp
+    src/c++/partido.cpp
+    src/c++/partido.h
+    src/c++/funciones.cpp
+    src/c++/defines.h
+    src/c++/Season.hpp
+)
 
 
 add_executable(correrTests ${SOURCE_FILES} src/c++/tests.cpp)
