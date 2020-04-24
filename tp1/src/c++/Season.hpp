@@ -14,22 +14,43 @@ private:
   vector<partido> _partidos;
 
   unordered_map<string, int> teams_ref;
-  matrix C;
-  vector<ranking_t> b;
+
+  // CMM variables
+  matrix cmm_C;
+  vector<ranking_t> cmm_b;
 
 public:
   Season(int cantPartidos, int cantEquipos, vector<partido> partidos);
+  void generateCMMStructures();
+  void calculateCMMRanking();
+  void generateWPStructures();
+  void generateMatrix(bool useLaplace);
 
 };
 
 Season::Season(int cantPartidos, int cantEquipos, vector<partido> partidos):
-      _cantPartidos(cantPartidos), _cantEquipos(cantEquipos), _partidos(std::move(partidos)) {
+    _cantPartidos(cantPartidos), _cantEquipos(cantEquipos), _partidos(std::move(partidos)) { }
 
+
+void Season::calculateCMMRanking() {
+  generateCMMStructures();
+}
+
+void Season::generateCMMStructures() {
+  generateMatrix(true);
+}
+
+void Season::generateWPStructures() {
+  generateMatrix(false);
+}
+
+void Season::generateMatrix(bool useLaplace) {
+  int b_default = useLaplace ? 1 : 0;
   //Armo matriz cantEquipos x cantEquipos
-  C = matrix(cantEquipos, vector<ranking_t>(cantEquipos, 0));
-  b = vector<ranking_t>(cantEquipos, 1);
+  cmm_C = matrix(_cantEquipos, vector<ranking_t>(_cantEquipos, 0));
+  cmm_b = vector<ranking_t>(_cantEquipos, b_default);
   int count_team = 0;
-  for (int partido = 0; partido < cantPartidos; partido++) {
+  for (int partido = 0; partido < _cantPartidos; partido++) {
     string team1 = _partidos[partido].getEquipo1();
     string team2 = _partidos[partido].getEquipo2();
 
@@ -46,31 +67,31 @@ Season::Season(int cantPartidos, int cantEquipos, vector<partido> partidos):
     //Acumulo la cantidad de partidos entre i y j, en C_ij y C_ji.
     int i = teams_ref[team1];
     int j = teams_ref[team2];
-    C[i][j]--;
-    C[j][i]--;
+    cmm_C[i][j]--;
+    cmm_C[j][i]--;
 
     /*
-     * Calculo el score de cada equipo en b
-     * b = 1 + (w_i - l_i)/2  => b = 1 + w_i/2 - l_i/2
+     * Calculo el score de cada equipo en cmm_b
+     * cmm_b = 1 + (w_i - l_i)/2  => cmm_b = 1 + w_i/2 - l_i/2
      */
     if(_partidos[partido].getGanador() == team1) {
-      b[i] += 0.5;
-      b[j] -= 0.5;
+      cmm_b[i] += 0.5;
+      cmm_b[j] -= 0.5;
     } else {
-      b[i] -= 0.5;
-      b[j] += 0.5;
+      cmm_b[i] -= 0.5;
+      cmm_b[j] += 0.5;
     }
     //Completo la diagonal
-    C[i][i]++;
-    C[j][j]++;
+    cmm_C[i][i]++;
+    cmm_C[j][j]++;
   }
 
   //Sumo 2 en la diagonal
-  for (int i = 0; i < cantEquipos; i++) {
-    C[i][i] += 2;
+  if (useLaplace) {
+    for (int i = 0; i < _cantEquipos; i++) {
+      cmm_C[i][i] += 2;
+    }
   }
-
 }
-
 
 #endif //TP1_SEASON_HPP
