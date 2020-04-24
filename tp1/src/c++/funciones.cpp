@@ -3,7 +3,8 @@
 
 using namespace std;
 
-#define matriz vector<vector<double>>
+#define dato long double
+#define matriz vector<vector<dato>>
 #define nat unsigned int
 
 matriz elimGauss (matriz &M){
@@ -14,7 +15,7 @@ matriz elimGauss (matriz &M){
   for (nat k = 0; k < res.size()-1; ++k) {  // fila pivot
 
     for (nat i = fila; i < res.size(); ++i) {  // fila actual en la que estoy restando
-      double x = res[i][columna] / res[k][columna];              //cantidad de veces a restar esa fila
+      dato x = res[i][columna] / res[k][columna];              //cantidad de veces a restar esa fila
 
       for (nat j = columna; j < res[0].size(); ++j) {  //columna actual
         res[i][j] -= x * res[k][j];

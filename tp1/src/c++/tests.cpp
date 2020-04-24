@@ -95,11 +95,10 @@ TEST(funciones, decYneg){
   matriz a = elimGauss(m);
 
   for (int i = 0; i < a.size(); ++i) { // imprimo lo que da la funcion
-    cout << endl;
     for (int j = 0; j < a[0].size(); ++j) {
       cout << a[i][j] << "  ";
-
     }
+    cout << endl;
   }
   matriz res = {{-1.5, 1.2, 2.2},  // resultado que deberia dar
                 {0, -203.0/25, 429.0/50},
