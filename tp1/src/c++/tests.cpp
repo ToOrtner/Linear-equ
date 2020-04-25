@@ -111,3 +111,24 @@ TEST(funciones, decYneg) {
                 {0, 0, 0}};
   EXPECT_MATRIX_FLOATS_NEARLY_EQ(m, res, precision);
 }
+
+TEST(funciones, rompeSim) {
+
+  matrix m = {
+          {1, 1, 2},
+          {1, 1, 1},
+          {2, 1, 1}};
+
+  elimGauss(m);
+
+  for (nat i = 0; i < m.size(); ++i) { // imprimo lo que da la funcion
+    for (nat j = 0; j < m[0].size(); ++j) {
+      cout << fixed << setprecision(9) << m[i][j] << "  ";
+    }
+    cout << endl;
+  }
+  matrix res = {{1, 1, 2},
+                {0, -1, -3},
+                {0, 0, -1}};
+  EXPECT_MATRIX_FLOATS_NEARLY_EQ(m, res, precision);
+}
