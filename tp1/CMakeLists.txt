@@ -17,12 +17,18 @@ add_executable(
 )
 
 
-add_executable(correrTests ${SOURCE_FILES} src/c++/tests/elimGaussTests.cpp)
+add_executable(correrTests ${SOURCE_FILES} src/c++/tests/elimGaussTests.cpp src/c++/tests/solveSystemTests.cpp src/c++/tests/expecteds.h)
+
+add_executable(elimGaussTests ${SOURCE_FILES} src/c++/tests/elimGaussTests.cpp src/c++/tests/expecteds.h)
+add_executable(solveSystemTests ${SOURCE_FILES} src/c++/tests/solveSystemTests.cpp src/c++/tests/expecteds.h)
+
 
 
 # Necesitamos asociar los archivos del framework de testing
 target_link_libraries(correrTests gtest gtest_main)
+target_link_libraries(elimGaussTests gtest gtest_main)
+target_link_libraries(solveSystemTests gtest gtest_main)
 
 
 # Test suites a ejecutar
-add_test(correrTests tp1)
+add_test(correrTests elimGaussTests solveSystemTests tp1)
