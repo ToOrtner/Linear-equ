@@ -3,31 +3,31 @@
 
 #include <iostream>
 #include <vector>
+#include "defines.h"
 
-using namespace std;
-
-#define dato long double
-#define matriz vector<vector<dato>>
-#define nat unsigned int
-
-matriz elimGauss (matriz &M){
-  matriz res = M;
+matrix elimGauss (matrix &C, vector<ranking_t> b){
 
   nat columna=0;
   nat fila=1;      //tengo que empezar a restar desde la 2da fila
-  for (nat k = 0; k < res.size()-1; ++k) {  // fila pivot
 
-    for (nat i = fila; i < res.size(); ++i) {  // fila actual en la que estoy restando
-      dato x = res[i][columna] / res[k][columna];              //cantidad de veces a restar esa fila
+  //Primero triangulo
+  for (nat fila_pivot = 0; fila_pivot < C.size() - 1; ++fila_pivot) {  // fila pivot
 
-      for (nat j = columna; j < res[0].size(); ++j) {  //columna actual
-        res[i][j] -= x * res[k][j];
+    for (nat fila_actual = fila; fila_actual < C.size(); ++fila_actual) {  // fila actual en la que estoy restando
+      ranking_t multiplicador = C[fila_actual][columna] / C[fila_pivot][columna];              //cantidad de veces a restar esa fila
+
+
+      for (nat columna_actual = columna; columna_actual < C[0].size(); ++columna_actual) {  //columna actual
+        C[fila_actual][columna_actual] -= multiplicador * C[fila_pivot][columna_actual];
       }
+      b[fila_actual] -= multiplicador * b[fila_pivot];
     }
     columna++;
     fila++;
   }
-  return res;
+
+  return C;
+
 }
 
 #endif // FUNCIONES_CPP
