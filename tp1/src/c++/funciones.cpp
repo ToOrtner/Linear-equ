@@ -5,7 +5,16 @@
 #include <vector>
 #include "defines.h"
 
-matrix elimGauss (matrix &C, vector<ranking_t> b){
+void elimGaussExpandida(matrix &C, vector<ranking_t> b);
+void elimGauss(matrix &C);
+
+void elimGauss(matrix &C){
+    elimGaussExpandida(C, vector<ranking_t>());
+}
+
+void elimGaussExpandida(matrix &C, vector<ranking_t> b){
+
+  bool isExpanded = !b.empty();
 
   nat columna=0;
   nat fila=1;      //tengo que empezar a restar desde la 2da fila
@@ -20,14 +29,12 @@ matrix elimGauss (matrix &C, vector<ranking_t> b){
       for (nat columna_actual = columna; columna_actual < C[0].size(); ++columna_actual) {  //columna actual
         C[fila_actual][columna_actual] -= multiplicador * C[fila_pivot][columna_actual];
       }
-      b[fila_actual] -= multiplicador * b[fila_pivot];
+      if (isExpanded)
+        b[fila_actual] -= multiplicador * b[fila_pivot];
     }
     columna++;
     fila++;
   }
-
-  return C;
-
 }
 
 #endif // FUNCIONES_CPP
