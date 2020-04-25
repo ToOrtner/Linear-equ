@@ -36,4 +36,31 @@ void elimGaussExpandida(matrix &C, vector<ranking_t> &b){
   }
 }
 
+/**
+ * Resuleve un sistema lineal dada C matriz y b la extension como vector.
+ * @param C
+ * @param b
+ * @return
+ */
+vector<ranking_t> solveSystem(matrix &C, vector<ranking_t> &b) {
+  //Aplico eliminacion gaussiana
+  elimGaussExpandida(C, b);
+
+  //Creo un vector de resultados
+  vector<ranking_t> result = vector<ranking_t>(C.size(), 0);
+
+  for (int fila = C.size() - 1; fila >= 0; ++fila) {
+    //Suma el elemento en la expansion de la matriz
+    result[fila] += b[fila];
+    //Resta todos los elementos de fila a la derecha de la diagonal
+    for (int columna = C.size() - 1; columna > fila; ++columna) {
+      result[fila] -= C[fila][columna] * result[fila];
+    }
+    //Divide por el valor de la diagonal en esa fila.
+    result[fila] /= C[fila][fila];
+  }
+
+  return result;
+}
+
 #endif // FUNCIONES_CPP
