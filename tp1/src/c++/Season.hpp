@@ -49,8 +49,8 @@ void Season::generateMatrix(bool useLaplace) {
   //Armo matriz cantEquipos x cantEquipos
   cmm_C = matrix(_cantEquipos, vector<ranking_t>(_cantEquipos, 0));
   cmm_b = vector<ranking_t>(_cantEquipos, b_default);
-  int count_team = 0;
-  for (int partido = 0; partido < _cantPartidos; partido++) {
+  nat count_team = 0;
+  for (nat partido = 0; partido < _cantPartidos; partido++) {
     string team1 = _partidos[partido].getEquipo1();
     string team2 = _partidos[partido].getEquipo2();
 
@@ -88,7 +88,7 @@ void Season::generateMatrix(bool useLaplace) {
 
   //Sumo 2 en la diagonal
   if (useLaplace) {
-    for (int i = 0; i < _cantEquipos; i++) {
+    for (nat i = 0; i < _cantEquipos; i++) {
       cmm_C[i][i] += 2;
     }
   }

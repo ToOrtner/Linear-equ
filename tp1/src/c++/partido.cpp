@@ -1,7 +1,3 @@
-//
-// Created by awolfsdorf on 22/4/20.
-//
-
 #include "partido.h"
 
 partido::partido(const string &fecha, const string &equipo1, int puntaje1, const string &equipo2, int puntaje2) : fecha(

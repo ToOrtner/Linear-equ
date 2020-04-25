@@ -1,7 +1,3 @@
-//
-// Created by awolfsdorf on 22/4/20.
-//
-
 #ifndef TP1_PARTIDO_H
 #define TP1_PARTIDO_H
 
