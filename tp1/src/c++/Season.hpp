@@ -9,8 +9,8 @@ using namespace std;
 
 class Season {
 private:
-  int _cantPartidos;
-  int _cantEquipos;
+  nat _cantPartidos;
+  nat _cantEquipos;
   vector<partido> _partidos;
 
   unordered_map<string, int> teams_ref;
@@ -20,7 +20,7 @@ private:
   vector<ranking_t> cmm_b;
 
 public:
-  Season(int cantPartidos, int cantEquipos, vector<partido> partidos);
+  Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos);
   void generateCMMStructures();
   void calculateCMMRanking();
   void generateWPStructures();
@@ -28,7 +28,7 @@ public:
 
 };
 
-Season::Season(int cantPartidos, int cantEquipos, vector<partido> partidos):
+Season::Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos):
     _cantPartidos(cantPartidos), _cantEquipos(cantEquipos), _partidos(std::move(partidos)) { }
 
 

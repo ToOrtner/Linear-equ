@@ -27,13 +27,13 @@ int main(int argc, char* argv[]) {
  */
 Season parseDat(const string &path) {
   ifstream file (path);
-  unsigned int cantPartidos, cantEquipos;
+  nat cantPartidos, cantEquipos;
   file >> cantEquipos >> cantPartidos;
 
   vector<partido> partidos = vector<partido>();
   string fecha, equipo1, equipo2;
   int p1, p2;
-  int i = 0;
+  nat i = 0;
   while(i < cantPartidos && file >> fecha >> equipo1 >> p1 >> equipo2 >> p2) {
     partido p(fecha, equipo1, p1, equipo2, p2);
     partidos.push_back(p);

@@ -15,12 +15,14 @@
 
 TEST(funciones, prueba1) {
 
-  matrix m = {{1, 2, 1}, {3, 2, 0}, {5, 2, 1}};
+  matrix m = {{1, 2, 1},
+              {3, 2, 0},
+              {5, 2, 1}};
   elimGauss(m);
 
-  for (int i = 0; i < m.size(); ++i) { // imprimo lo que da la funcion
+  for (nat i = 0; i < m.size(); ++i) { // imprimo lo que da la funcion
     cout << endl;
-    for (int j = 0; j < m[0].size(); ++j) {
+    for (nat j = 0; j < m[0].size(); ++j) {
       cout << m[i][j] << "  ";
     }
   }
@@ -32,13 +34,15 @@ TEST(funciones, prueba1) {
 
 TEST(funciones, prueba2) {
 
-  matrix m = {{1, 2, 0}, {1, 3, 6}, {1, 7, 30}};
+  matrix m = {{1, 2, 0},
+              {1, 3, 6},
+              {1, 7, 30}};
 
   elimGauss(m);
 
-  for (int i = 0; i < m.size(); ++i) { // imprimo lo que da la funcion
+  for (nat i = 0; i < m.size(); ++i) { // imprimo lo que da la funcion
     cout << endl;
-    for (int j = 0; j < m[0].size(); ++j) {
+    for (nat j = 0; j < m[0].size(); ++j) {
       cout << m[i][j] << "  ";
     }
   }
@@ -54,9 +58,9 @@ TEST(funciones, pruebaNoCuadrada) {
 
   elimGauss(m);
 
-  for (int i = 0; i < m.size(); ++i) { // imprimo lo que da la funcion
+  for (nat i = 0; i < m.size(); ++i) { // imprimo lo que da la funcion
     cout << endl;
-    for (int j = 0; j < m[0].size(); ++j) {
+    for (nat j = 0; j < m[0].size(); ++j) {
       cout << m[i][j] << "  ";
     }
   }
@@ -72,9 +76,9 @@ TEST(funciones, pruebaNoCuadrada2) {
 
   elimGauss(m);
 
-  for (int i = 0; i < m.size(); ++i) { // imprimo lo que da la funcion
+  for (nat i = 0; i < m.size(); ++i) { // imprimo lo que da la funcion
     cout << endl;
-    for (int j = 0; j < m[0].size(); ++j) {
+    for (nat j = 0; j < m[0].size(); ++j) {
       cout << m[i][j] << "  ";
     }
   }
@@ -88,12 +92,15 @@ TEST(funciones, pruebaNoCuadrada2) {
 TEST(funciones, decYneg) {
 
   matrix m = {
-      {-1.5, 1.2, 2.2}, {5.1, -12.2, 1.1}, {-2.2, 31.1, 1.2}, {0.2, -5.1, 5.1}};
+      {-1.5, 1.2, 2.2},
+      {5.1, -12.2, 1.1},
+      {-2.2, 31.1, 1.2},
+      {0.2, -5.1, 5.1}};
 
   elimGauss(m);
 
-  for (int i = 0; i < m.size(); ++i) { // imprimo lo que da la funcion
-    for (int j = 0; j < m[0].size(); ++j) {
+  for (nat i = 0; i < m.size(); ++i) { // imprimo lo que da la funcion
+    for (nat j = 0; j < m[0].size(); ++j) {
       cout << fixed << setprecision(9) << m[i][j] << "  ";
     }
     cout << endl;
