@@ -17,7 +17,7 @@ add_executable(
 )
 
 
-add_executable(correrTests ${SOURCE_FILES} src/c++/tests.cpp)
+add_executable(correrTests ${SOURCE_FILES} src/c++/tests/elimGaussTests.cpp)
 
 
 # Necesitamos asociar los archivos del framework de testing

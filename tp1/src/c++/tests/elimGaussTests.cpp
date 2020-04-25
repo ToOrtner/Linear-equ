@@ -1,15 +1,20 @@
-#include "../../google-test/include/gtest/gtest.h"
-#include "funciones.cpp"
-#include "defines.h"
+#include "../defines.h"
+#include "../funciones.cpp"
+#include "include/gtest/gtest.h"
 
-#define EXPECT_MATRIX_FLOATS_NEARLY_EQ(expected, actual, thresh) \
+#define EXPECT_VECTOR_FLOATS_NEARLY_EQ(expected, actual, precision) \
         EXPECT_EQ(expected.size(), actual.size()) << "Array sizes differ.";\
-        for (size_t idx = 0; idx < std::min(expected.size(), actual.size()); ++idx) \
+        for (size_t idy = 0; idy < std::min(expected.size(), actual.size()); ++idy) \
         { \
-            for (size_t idy = 0; idy < std::min(expected[0].size(), actual[0].size()); ++idy) \
-            { \
-                EXPECT_NEAR(expected[idx][idy], actual[idx][idy], thresh) << "at index: " << idx << "," << idy;\
-            }}
+            EXPECT_NEAR(expected[idy], actual[idy], precision) << "at index: " << idy; \
+        }
+
+#define EXPECT_MATRIX_FLOATS_NEARLY_EQ(expected, actual, precision) \
+        EXPECT_EQ(expected.size(), actual.size()) << "Array sizes differ.";\
+        for (size_t idx = 0; idx < expected.size(); ++idx) \
+        { \
+          EXPECT_VECTOR_FLOATS_NEARLY_EQ(expected[idx], actual[idx], precision) \
+        }
 
 
 
@@ -112,23 +117,24 @@ TEST(funciones, decYneg) {
   EXPECT_MATRIX_FLOATS_NEARLY_EQ(m, res, precision);
 }
 
-TEST(funciones, rompeSim) {
+TEST(funciones, prueba1Exp) {
 
-  matrix m = {
-          {1, 1, 2},
-          {1, 1, 1},
-          {2, 1, 1}};
-
-  elimGauss(m);
+  matrix m = {{1, 2, 1},
+              {3, 2, 0},
+              {5, 2, 1}};
+  vector<ranking_t> b = {1,2,3};
+  elimGaussExpandida(m, b);
 
   for (nat i = 0; i < m.size(); ++i) { // imprimo lo que da la funcion
-    for (nat j = 0; j < m[0].size(); ++j) {
-      cout << fixed << setprecision(9) << m[i][j] << "  ";
-    }
     cout << endl;
+    for (nat j = 0; j < m[0].size(); ++j) {
+      cout << m[i][j] << "  ";
+    }
   }
-  matrix res = {{1, 1, 2},
-                {0, -1, -3},
-                {0, 0, -1}};
-  EXPECT_MATRIX_FLOATS_NEARLY_EQ(m, res, precision);
+  matrix resM = {{1, 2, 1}, // resultado que deberia dar
+                {0, -4, -3},
+                {0, 0, 2}};
+  vector<ranking_t> resB = {1, -1, 0};
+  EXPECT_MATRIX_FLOATS_NEARLY_EQ(m, resM, precision);
+  EXPECT_VECTOR_FLOATS_NEARLY_EQ(b, resB, precision);
 }
