@@ -138,3 +138,25 @@ TEST(funciones, prueba1Exp) {
   EXPECT_MATRIX_FLOATS_NEARLY_EQ(m, resM, precision);
   EXPECT_VECTOR_FLOATS_NEARLY_EQ(b, resB, precision);
 }
+
+TEST(funciones, MandB) {
+
+  matrix m = {{1, 2, 1},
+              {3, 2, 0},
+              {5, 2, 1}};
+  vector<ranking_t> b = {1,3,3};
+  elimGaussExpandida(m, b);
+
+  for (nat i = 0; i < m.size(); ++i) { // imprimo lo que da la funcion
+    cout << endl;
+    for (nat j = 0; j < m[0].size(); ++j) {
+      cout << m[i][j] << "  ";
+    }
+  }
+  matrix resM = {{1, 2, 1}, // resultado que deberia dar
+                 {0, -4, -3},
+                 {0, 0, 2}};
+  vector<ranking_t> resB = {1, 0, -2};
+  EXPECT_MATRIX_FLOATS_NEARLY_EQ(m, resM, precision);
+  EXPECT_VECTOR_FLOATS_NEARLY_EQ(b, resB, precision);
+}
