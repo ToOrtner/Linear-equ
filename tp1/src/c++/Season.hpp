@@ -22,6 +22,7 @@ private:
 
 public:
   Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos);
+  unsigned int getCantEquipos() const;
   void generateCMMStructures();
   void generateMatrix(bool useLaplace);
   vector<ranking_t> calculateCMMRanking();
@@ -30,6 +31,10 @@ public:
 
 Season::Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos):
     _cantPartidos(cantPartidos), _cantEquipos(cantEquipos), _partidos(std::move(partidos)) { }
+
+unsigned int Season::getCantEquipos() const {
+  return _cantEquipos;
+}
 
 void Season::generateMatrix(bool useLaplace) {
   int b_default = useLaplace ? 1 : 0;
