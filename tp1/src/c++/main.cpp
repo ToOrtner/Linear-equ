@@ -26,8 +26,12 @@ int main(int argc, char* argv[]) {
    */
   switch (method) {
     case 0:
-      //Genera la matriz C y b para calcular el ranking segun CMM.
+      // Genera la matriz C y b para calcular el ranking segun CMM.
       rankings = season.calculateCMMRanking();
+      break;
+    case 1:
+      // Hace el calculo de ganados/jugados.
+      rankings = season.calculateWPRanking();
       break;
   }
 

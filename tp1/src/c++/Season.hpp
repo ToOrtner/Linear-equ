@@ -26,6 +26,7 @@ public:
   void generateCMMStructures();
   void generateMatrix(bool useLaplace);
   vector<ranking_t> calculateCMMRanking();
+  vector<ranking_t> calculateWPRanking();
 
 };
 
@@ -93,6 +94,48 @@ void Season::generateCMMStructures() {
 vector<ranking_t> Season::calculateCMMRanking() {
   generateCMMStructures();
   return  solveSystem(cmm_C, cmm_b);
+}
+
+vector<ranking_t> Season::calculateWPRanking() {
+  //Donde se guardan los partidos ganados
+  vector<ranking_t> ranking = vector<ranking_t>(_cantEquipos, 0);
+  vector<ranking_t> totalJugados = vector<ranking_t>(_cantEquipos, 0);
+
+  nat count_team = 0;
+  for (nat partido = 0; partido < _cantPartidos; partido++) {
+    string team1 = _partidos[partido].getEquipo1();
+    string team2 = _partidos[partido].getEquipo2();
+
+    //Si el team no esta definido, defino y mapeo con un indice fila de la matriz.
+    if (teams_ref.find(team1) == teams_ref.end()) {
+      teams_ref[team1] = count_team;
+      count_team++;
+    }
+    if (teams_ref.find(team2) == teams_ref.end()) {
+      teams_ref[team2] = count_team;
+      count_team++;
+    }
+
+    int i = teams_ref[team1];
+    int j = teams_ref[team2];
+    //Acumulo los partidos jugados
+    totalJugados[i]++;
+    totalJugados[j]++;
+
+    //Acumulo las victorias del ganador
+    if(_partidos[partido].getGanador() == team1) {
+      ranking[i]++;
+    } else {
+      ranking[j]++;
+    }
+  }
+
+  //Calculo el score como ganados/total jugados en partidosGanados.
+  for (int k = 0; k < _cantEquipos; ++k) {
+    ranking[k] = (double)(ranking[k] / totalJugados[k]);
+  }
+
+  return ranking;
 }
 
 #endif //TP1_SEASON_HPP
