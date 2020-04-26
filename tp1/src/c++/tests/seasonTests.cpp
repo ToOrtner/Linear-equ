@@ -2,6 +2,7 @@
 #include <fstream>
 #include <dirent.h>
 #include "string"
+#include "expecteds.h"
 #include "../Season.hpp"
 
 DIR *dpdf;
@@ -14,7 +15,7 @@ vector<ranking_t> getExpected(string expectedFile, int cantEquipos);
 TEST(seasonGenerateMatrixTests, catedraTests) {
   vector<string> files = getCatedraTests();
   for (int i = 0; i < 1; i++) {
-    string path = "../tests/" + files[i] + ".in";
+    string path = "../tests/" + files[i];
     Season season = getSeason(path + ".in");
 
     //Calculo el score con el metodo de CMM
@@ -22,13 +23,10 @@ TEST(seasonGenerateMatrixTests, catedraTests) {
     //Busco los resultados esperados
     vector<ranking_t> expectedRankings = getExpected(path + ".expected", season.getCantEquipos());
 
+    //Ordeno de menor a mayor para poder comparar los rankings, ya que los equipos pueden estar en cualquier orden
     std::sort(rankings.begin(), rankings.end());
     std::sort(expectedRankings.begin(), expectedRankings.end());
-
-    cout.precision(FILE_PRESITION);
-    for (int j = 0; j < rankings.size(); ++j) {
-      cout << "resultado: " << rankings[j] << "; esperado: " << expectedRankings[j] << endl;
-    }
+    EXPECT_VECTOR_FLOATS_NEARLY_EQ(rankings, expectedRankings, precision);
 
   }
 
