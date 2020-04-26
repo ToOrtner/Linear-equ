@@ -1,9 +1,10 @@
 #ifndef TP1_SEASON_HPP
 #define TP1_SEASON_HPP
 
-#include "vector"
 #include <unordered_map>
+#include "vector"
 #include "defines.h"
+#include "funciones.hpp"
 
 using namespace std;
 
@@ -22,23 +23,13 @@ private:
 public:
   Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos);
   void generateCMMStructures();
-  void calculateCMMRanking();
   void generateMatrix(bool useLaplace);
+  vector<ranking_t> calculateCMMRanking();
 
 };
 
 Season::Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos):
     _cantPartidos(cantPartidos), _cantEquipos(cantEquipos), _partidos(std::move(partidos)) { }
-
-
-void Season::calculateCMMRanking() {
-  generateCMMStructures();
-  //TODO: Calculate CMM Matrix
-}
-
-void Season::generateCMMStructures() {
-  generateMatrix(true);
-}
 
 void Season::generateMatrix(bool useLaplace) {
   int b_default = useLaplace ? 1 : 0;
@@ -88,6 +79,15 @@ void Season::generateMatrix(bool useLaplace) {
       cmm_C[i][i] += 2;
     }
   }
+}
+
+void Season::generateCMMStructures() {
+  generateMatrix(true);
+}
+
+vector<ranking_t> Season::calculateCMMRanking() {
+  generateCMMStructures();
+  return  solveSystem(cmm_C, cmm_b);
 }
 
 #endif //TP1_SEASON_HPP
