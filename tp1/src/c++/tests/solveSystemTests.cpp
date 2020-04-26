@@ -1,5 +1,5 @@
 #include "include/gtest/gtest.h"
-#include "../funciones.cpp"
+#include "../funciones.hpp"
 #include "expecteds.h"
 
 TEST(solve, resolverSistema) {

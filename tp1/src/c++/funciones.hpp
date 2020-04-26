@@ -1,5 +1,5 @@
-#ifndef FUNCIONES_CPP
-#define FUNCIONES_CPP
+#ifndef FUNCIONES_HPP
+#define FUNCIONES_HPP
 
 #include <iostream>
 #include <vector>

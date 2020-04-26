@@ -11,7 +11,7 @@ add_executable(
     src/c++/main.cpp
     src/c++/partido.cpp
     src/c++/partido.h
-    src/c++/funciones.cpp
+    src/c++/funciones.hpp
     src/c++/defines.h
     src/c++/Season.hpp
 )
