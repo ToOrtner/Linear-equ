@@ -16,8 +16,7 @@ add_executable(
     src/c++/Season.hpp
 )
 
-
-add_executable(correrTests ${SOURCE_FILES} src/c++/tests/elimGaussTests.cpp src/c++/tests/solveSystemTests.cpp src/c++/tests/expecteds.h)
+add_executable(correrTests ${SOURCE_FILES} src/c++/tests/elimGaussTests.cpp src/c++/tests/seasonTests.cpp src/c++/tests/solveSystemTests.cpp src/c++/tests/expecteds.h)
 
 add_executable(elimGaussTests ${SOURCE_FILES} src/c++/tests/elimGaussTests.cpp src/c++/tests/expecteds.h)
 add_executable(solveSystemTests ${SOURCE_FILES} src/c++/tests/solveSystemTests.cpp src/c++/tests/expecteds.h)
@@ -31,4 +30,4 @@ target_link_libraries(solveSystemTests gtest gtest_main)
 
 
 # Test suites a ejecutar
-add_test(correrTests elimGaussTests solveSystemTests tp1)
+add_test(correrTests elimGaussTests seasonTests solveSystemTests tp1)

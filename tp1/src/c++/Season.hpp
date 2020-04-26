@@ -23,7 +23,6 @@ public:
   Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos);
   void generateCMMStructures();
   void calculateCMMRanking();
-  void generateWPStructures();
   void generateMatrix(bool useLaplace);
 
 };
@@ -34,14 +33,11 @@ Season::Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos):
 
 void Season::calculateCMMRanking() {
   generateCMMStructures();
+  //TODO: Calculate CMM Matrix
 }
 
 void Season::generateCMMStructures() {
   generateMatrix(true);
-}
-
-void Season::generateWPStructures() {
-  generateMatrix(false);
 }
 
 void Season::generateMatrix(bool useLaplace) {
