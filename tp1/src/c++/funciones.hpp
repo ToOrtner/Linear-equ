@@ -63,4 +63,4 @@ vector<ranking_t> solveSystem(matrix &C, vector<ranking_t> &b) {
   return result;
 }
 
-#endif // FUNCIONES_CPP
+#endif // FUNCIONES_HPP
