@@ -11,9 +11,9 @@ Season parseDat(const string &path);
 void saveResult(string outputPath, vector<ranking_t> rankings);
 
 int main(int argc, char* argv[]) {
-  int method = stoi(argv[1]);
-  string inputPath = argv[2];
-  string outputPath = argv[3];
+  string inputPath = argv[1];
+  string outputPath = argv[2];
+  int method = stoi(argv[3]);
 
   //Se crea la temporada con los datos de entrada
   Season season = parseDat(inputPath);
