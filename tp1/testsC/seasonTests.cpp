@@ -3,7 +3,7 @@
 #include <dirent.h>
 #include "string"
 #include "expecteds.h"
-#include "../../src/c++/Season.hpp"
+#include "../src/c++/Season.hpp"
 
 DIR *dpdf;
 struct dirent *epdf;

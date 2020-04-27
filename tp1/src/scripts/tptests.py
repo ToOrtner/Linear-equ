@@ -1,9 +1,9 @@
 import unittest
-import scripts.settings as settings
+import src.scripts.settings as settings
 
 from subprocess import *
 from glob import glob
-from scripts.utils import listfiles
+from src.scripts.utils import listfiles
 
 
 class Tp1TestCase(unittest.TestCase):
