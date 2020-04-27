@@ -1,7 +1,7 @@
 #include "include/gtest/gtest.h"
-#include "../defines.h"
+#include "../../src/c++/defines.h"
 #include "expecteds.h"
-#include "../funciones.hpp"
+#include "../../src/c++/funciones.hpp"
 
 TEST(funciones, prueba1) {
 
