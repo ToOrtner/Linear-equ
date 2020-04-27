@@ -1,7 +1,7 @@
 #!/usr/bin/python
-from scripts.fabricate import *
-from scripts.settings import *
-from scripts.utils import listfiles
+from src.scripts.fabricate import *
+from src.scripts.settings import *
+from src.scripts.utils import listfiles
 from sys import argv
 
 # Acciones
@@ -24,6 +24,6 @@ def clean():
 def test():
   build()
   import unittest
-  unittest.main(module='scripts.tptests', exit=False, argv=argv[:1], verbosity=3)
+  unittest.main(module='src.scripts.tptests', exit=False, argv=argv[:1], verbosity=3)
 
 main()
