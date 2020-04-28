@@ -20,13 +20,16 @@ private:
   matrix cmm_C;
   vector<ranking_t> cmm_b;
 
+  vector<ranking_t> _calculateWPRanking(bool useLaplace);
+
 public:
   Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos);
   unsigned int getCantEquipos() const;
   void generateCMMStructures();
   void generateMatrix(bool useLaplace);
   vector<ranking_t> calculateCMMRanking();
-  vector<ranking_t> calculateWPRanking(bool useLaplace);
+  vector<ranking_t> calculateWPRanking();
+  vector<ranking_t> calculateWPRankingWithLaplace();
 };
 
 Season::Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos):
@@ -95,7 +98,15 @@ vector<ranking_t> Season::calculateCMMRanking() {
   return  solveSystem(cmm_C, cmm_b);
 }
 
-vector<ranking_t> Season::calculateWPRanking(bool useLaplace) {
+vector<ranking_t> Season::calculateWPRanking() {
+  return _calculateWPRanking(false);
+}
+
+vector<ranking_t> Season::calculateWPRankingWithLaplace() {
+  return _calculateWPRanking(true);
+}
+
+vector<ranking_t> Season::_calculateWPRanking(bool useLaplace) {
   int defaultTotalValue = useLaplace ? 2 : 0;
   int defaultRankingValue = useLaplace ? 1 : 0;
   //Donde se guardan los partidos ganados
