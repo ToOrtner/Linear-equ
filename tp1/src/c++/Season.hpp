@@ -26,8 +26,7 @@ public:
   void generateCMMStructures();
   void generateMatrix(bool useLaplace);
   vector<ranking_t> calculateCMMRanking();
-  vector<ranking_t> calculateWPRanking();
-
+  vector<ranking_t> calculateWPRanking(bool useLaplace);
 };
 
 Season::Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos):
@@ -96,10 +95,12 @@ vector<ranking_t> Season::calculateCMMRanking() {
   return  solveSystem(cmm_C, cmm_b);
 }
 
-vector<ranking_t> Season::calculateWPRanking() {
+vector<ranking_t> Season::calculateWPRanking(bool useLaplace) {
+  int defaultTotalValue = useLaplace ? 2 : 0;
+  int defaultRankingValue = useLaplace ? 1 : 0;
   //Donde se guardan los partidos ganados
-  vector<ranking_t> ranking = vector<ranking_t>(_cantEquipos, 0);
-  vector<ranking_t> totalJugados = vector<ranking_t>(_cantEquipos, 0);
+  vector<ranking_t> ranking = vector<ranking_t>(_cantEquipos, defaultRankingValue);
+  vector<ranking_t> totalJugados = vector<ranking_t>(_cantEquipos, defaultTotalValue);
 
   nat count_team = 0;
   for (nat partido = 0; partido < _cantPartidos; partido++) {
