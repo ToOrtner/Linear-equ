@@ -16,7 +16,17 @@ add_executable(
     src/c++/Season.hpp
 )
 
-add_executable(correrTests ${SOURCE_FILES} testsC/elimGaussTests.cpp testsC/seasonTests.cpp testsC/solveSystemTests.cpp testsC/expecteds.h)
+add_executable(
+    correrExps
+    testsC/experimentos.cpp
+    src/c++/partido.cpp
+    src/c++/partido.h
+    src/c++/funciones.hpp
+    src/c++/defines.h
+    src/c++/Season.hpp
+)
+
+add_executable(correrTests ${SOURCE_FILES} testsC/elimGaussTests.cpp testsC/seasonTests.cpp testsC/solveSystemTests.cpp testsC/expecteds.h testsC/experimentos.cpp)
 
 add_executable(elimGaussTests ${SOURCE_FILES} testsC/elimGaussTests.cpp testsC/expecteds.h)
 add_executable(solveSystemTests ${SOURCE_FILES} testsC/solveSystemTests.cpp testsC/expecteds.h)
