@@ -29,8 +29,6 @@ TEST(seasonGenerateMatrixTests, catedraTests) {
     EXPECT_VECTOR_FLOATS_NEARLY_EQ(rankings, expectedRankings, precision);
 
   }
-
-  assert(true);
 }
 
 vector<ranking_t> getExpected(string expectedFile, int cantEquipos) {
