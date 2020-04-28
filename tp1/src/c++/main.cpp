@@ -7,16 +7,13 @@
 
 using namespace std;
 
-Season parseDat(const string &path);
-void saveResult(string outputPath, vector<ranking_t> rankings);
-
 int main(int argc, char* argv[]) {
   string inputPath = argv[1];
   string outputPath = argv[2];
   int method = stoi(argv[3]);
 
   //Se crea la temporada con los datos de entrada
-  Season season = parseDat(inputPath);
+  Season season = Season::parseDat(inputPath);
   vector<ranking_t> rankings;
 
   /**
@@ -33,48 +30,14 @@ int main(int argc, char* argv[]) {
       // Hace el calculo de ganados/jugados.
       rankings = season.calculateWPRanking();
       break;
+    case 2:
+      // Hace el calculo de (1 + ganados)/(2 + jugados).
+      rankings = season.calculateWPRankingWithLaplace();
+      break;
   }
 
   //Exporta el resultado al archivo pasado por parametro
   saveResult(outputPath, rankings);
 
   return 0;
-}
-
-/**
- * Read the file and generate array with all games
- * @param path
- * @return
- */
-Season parseDat(const string &path) {
-  ifstream file (path);
-  nat cantPartidos, cantEquipos;
-  file >> cantEquipos >> cantPartidos;
-
-  vector<partido> partidos = vector<partido>();
-  string fecha, equipo1, equipo2;
-  int p1, p2;
-  nat i = 0;
-  while(i < cantPartidos && file >> fecha >> equipo1 >> p1 >> equipo2 >> p2) {
-    partido p(fecha, equipo1, p1, equipo2, p2);
-    partidos.push_back(p);
-    i++;
-  }
-  file.close();
-
-  return Season(cantPartidos, cantEquipos, partidos);
-}
-
-/**
- * Export ranking table in outputPath.
- * @param outputPath
- * @param rankings
- */
-void saveResult(string outputPath, vector<ranking_t> rankings) {
-  ofstream file(outputPath);
-  file.precision(FILE_PRESITION);
-  for (int i = 0; i < rankings.size(); ++i) {
-    file << rankings[i] << endl;
-  }
-  file.close();
 }

@@ -8,6 +8,8 @@
 void elimGaussExpandida(matrix &C, vector<ranking_t> &b);
 void elimGauss(matrix &C);
 
+void saveResult(string outputPath, vector<ranking_t> rankings);
+
 void elimGauss(matrix &C){
   vector<ranking_t> b = vector<ranking_t>();
   elimGaussExpandida(C, b);
@@ -62,5 +64,20 @@ vector<ranking_t> solveSystem(matrix &C, vector<ranking_t> &b) {
 
   return result;
 }
+
+/**
+ * Export ranking table in outputPath.
+ * @param outputPath
+ * @param rankings
+ */
+void saveResult(string outputPath, vector<ranking_t> rankings) {
+  ofstream file(outputPath);
+  file.precision(FILE_PRESITION);
+  for (int i = 0; i < rankings.size(); ++i) {
+    file << rankings[i] << endl;
+  }
+  file.close();
+}
+
 
 #endif // FUNCIONES_HPP

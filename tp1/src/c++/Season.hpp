@@ -25,11 +25,13 @@ private:
 public:
   Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos);
   unsigned int getCantEquipos() const;
+  unsigned int getCantPartidos() const;
   void generateCMMStructures();
   void generateMatrix(bool useLaplace);
   vector<ranking_t> calculateCMMRanking();
   vector<ranking_t> calculateWPRanking();
   vector<ranking_t> calculateWPRankingWithLaplace();
+  static Season parseDat(const string &path);
 };
 
 Season::Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos):
@@ -37,6 +39,10 @@ Season::Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos):
 
 unsigned int Season::getCantEquipos() const {
   return _cantEquipos;
+}
+
+unsigned int Season::getCantPartidos() const {
+  return _cantPartidos;
 }
 
 void Season::generateMatrix(bool useLaplace) {
@@ -95,7 +101,7 @@ void Season::generateCMMStructures() {
 
 vector<ranking_t> Season::calculateCMMRanking() {
   generateCMMStructures();
-  return  solveSystem(cmm_C, cmm_b);
+  return solveSystem(cmm_C, cmm_b);
 }
 
 vector<ranking_t> Season::calculateWPRanking() {
@@ -148,6 +154,30 @@ vector<ranking_t> Season::_calculateWPRanking(bool useLaplace) {
   }
 
   return ranking;
+}
+
+/**
+ * Read the file and generate array with all games
+ * @param path
+ * @return
+ */
+Season Season::parseDat(const string &path) {
+  ifstream file (path);
+  nat cantPartidos, cantEquipos;
+  file >> cantEquipos >> cantPartidos;
+
+  vector<partido> partidos = vector<partido>();
+  string fecha, equipo1, equipo2;
+  int p1, p2;
+  nat i = 0;
+  while(i < cantPartidos && file >> fecha >> equipo1 >> p1 >> equipo2 >> p2) {
+    partido p(fecha, equipo1, p1, equipo2, p2);
+    partidos.push_back(p);
+    i++;
+  }
+  file.close();
+
+  return Season(cantPartidos, cantEquipos, partidos);
 }
 
 #endif //TP1_SEASON_HPP
