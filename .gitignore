@@ -4,3 +4,7 @@
 *.o
 */.deps
 */tp
+tp1/src/.deps
+*/__pycache__/
+tp1/src/tp
+tp1/src/scripts/__pycache__/
