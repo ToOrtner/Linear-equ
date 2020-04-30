@@ -12,10 +12,15 @@ static const string FILE_OUTPUT_DELTA_PREFIX =  "exps/output_";
 void correrCMM();
 void correrWP();
 void correrLaplace();
+void compararTiempos();
+
 int main() {
+  /*
   correrCMM();
   correrWP();
-  correrLaplace();
+  correrLaplace();*/
+
+  compararTiempos();
   return 1;
 }
 
@@ -59,7 +64,6 @@ void correrWP() {
   outputFile.close();
 }
 
-
 void correrLaplace() {
   Season season = Season::parseDat("data/atp_matches_2015.dat");
   string file_name = FILE_OUTPUT_DELTA_PREFIX + "_Laplace_" + to_string(season.getCantPartidos()) + "_" + to_string(season.getCantEquipos()) + ".csv";
@@ -71,7 +75,7 @@ void correrLaplace() {
 
   //Contabilizo el tiempo por las dudas
   auto start = chrono::steady_clock::now();
-  season.calculateWPRanking();
+  season.calculateWPRankingWithLaplace();
   auto end = chrono::steady_clock::now();
 
   auto timeElapsed = end - start;
@@ -79,3 +83,33 @@ void correrLaplace() {
 
   outputFile.close();
 }
+
+void compararTiempos(){
+  ofstream archivo;  // objeto de la clase ofstream
+  archivo.open("/comparacionTiempos.csv");
+  archivo << "n,CMM,WP,Laplace" << endl;
+  Season season = Season::parseDat("data/atp_matches_2015.dat");
+
+  nat n = season.getCantPartidos();
+
+  auto time_start_CMM = std::chrono::steady_clock::now();
+  season.calculateCMMRanking();
+  auto time_end_CMM = std::chrono::steady_clock::now();
+  auto timeCMM = chrono::duration_cast<std::chrono::milliseconds>(time_end_CMM - time_start_CMM).count();
+
+  auto time_start_WP = std::chrono::steady_clock::now();
+  season.calculateWPRanking();
+  auto time_end_WP = std::chrono::steady_clock::now();
+  auto timeWP = chrono::duration_cast<std::chrono::milliseconds>(time_end_WP - time_start_WP).count();
+
+  auto time_start_Lapla = std::chrono::steady_clock::now();
+  season.calculateWPRankingWithLaplace();
+  auto time_end_Lapla = std::chrono::steady_clock::now();
+  auto timeLapla = chrono::duration_cast<std::chrono::milliseconds>(time_end_Lapla - time_start_Lapla).count();
+
+  archivo << n << "," << timeCMM << "," << timeWP << ","  << timeLapla << endl;
+
+
+
+}
+
