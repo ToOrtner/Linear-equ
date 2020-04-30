@@ -15,13 +15,12 @@ void correrLaplace();
 void compararTiempos();
 
 int main() {
-  /*
   correrCMM();
   correrWP();
-  correrLaplace();*/
+  correrLaplace();
 
   compararTiempos();
-  return 1;
+  return 0;
 }
 
 void correrCMM() {
@@ -30,7 +29,7 @@ void correrCMM() {
 
   //Output file
   ofstream outputFile;
-  outputFile.open (file_name, fstream::in | fstream::out | fstream::trunc);
+  outputFile.open(file_name, fstream::in | fstream::out | fstream::trunc);
   outputFile << "tiempo" << endl;
 
   //Contabilizo el tiempo por las dudas
@@ -39,7 +38,7 @@ void correrCMM() {
   auto end = chrono::steady_clock::now();
 
   auto timeElapsed = end - start;
-  outputFile << chrono::duration <double, milli>(timeElapsed).count() << endl;
+  outputFile << chrono::duration<double, milli>(timeElapsed).count() << endl;
 
   outputFile.close();
 }
