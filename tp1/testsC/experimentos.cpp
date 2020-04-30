@@ -85,7 +85,7 @@ void correrLaplace() {
 
 void compararTiempos(){
   ofstream archivo;  // objeto de la clase ofstream
-  archivo.open("/comparacionTiempos.csv");
+  archivo.open("exps/comparacionTiempos.csv", fstream::in | fstream::out | fstream::trunc);
   archivo << "n,CMM,WP,Laplace" << endl;
   Season season = Season::parseDat("data/atp_matches_2015.dat");
 
@@ -108,7 +108,6 @@ void compararTiempos(){
 
   archivo << n << "," << timeCMM << "," << timeWP << ","  << timeLapla << endl;
 
-
-
+  archivo.close();
 }
 
