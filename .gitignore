@@ -8,3 +8,4 @@ tp1/src/.deps
 */__pycache__/
 tp1/src/tp
 tp1/src/scripts/__pycache__/
+tp1/exps/.ipynb_checkpoints
