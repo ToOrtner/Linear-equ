@@ -5,6 +5,7 @@
 #include "vector"
 #include "defines.h"
 #include "funciones.hpp"
+#include <set>
 
 using namespace std;
 
@@ -14,7 +15,7 @@ private:
   nat _cantEquipos;
   vector<partido> _partidos;
 
-  unordered_map<string, int> teams_ref;
+  set<int> _ordered_teams;
 
   // CMM variables
   matrix cmm_C;
@@ -23,7 +24,7 @@ private:
   vector<ranking_t> _calculateWPRanking(bool useLaplace);
 
 public:
-  Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos);
+  Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos, set<int> ordered_teams);
   unsigned int getCantEquipos() const;
   unsigned int getCantPartidos() const;
   void generateCMMStructures();
@@ -34,8 +35,10 @@ public:
   static Season parseDat(const string &path);
 };
 
-Season::Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos):
-    _cantPartidos(cantPartidos), _cantEquipos(cantEquipos), _partidos(std::move(partidos)) { }
+Season::Season(nat cantPartidos, nat cantEquipos, vector<partido> partidos, set<int> ordered_teams):
+    _cantPartidos(cantPartidos), _cantEquipos(cantEquipos), _partidos(std::move(partidos)) {
+  _ordered_teams = ordered_teams;
+}
 
 unsigned int Season::getCantEquipos() const {
   return _cantEquipos;
@@ -55,19 +58,9 @@ void Season::generateMatrix(bool useLaplace) {
     string team1 = _partidos[partido].getEquipo1();
     string team2 = _partidos[partido].getEquipo2();
 
-    //Si el team no esta definido, defino y mapeo con un indice fila de la matriz.
-    if(teams_ref.find(team1) == teams_ref.end()) {
-      teams_ref[team1] = count_team;
-      count_team++;
-    }
-    if(teams_ref.find(team2) == teams_ref.end()) {
-      teams_ref[team2] = count_team;
-      count_team++;
-    }
-
     //Acumulo la cantidad de partidos entre i y j, en C_ij y C_ji.
-    int i = teams_ref[team1];
-    int j = teams_ref[team2];
+    int i = distance(_ordered_teams.begin(), _ordered_teams.find(stoi(team1)));
+    int j = distance(_ordered_teams.begin(), _ordered_teams.find(stoi(team2)));
     cmm_C[i][j]--;
     cmm_C[j][i]--;
 
@@ -124,18 +117,9 @@ vector<ranking_t> Season::_calculateWPRanking(bool useLaplace) {
     string team1 = _partidos[partido].getEquipo1();
     string team2 = _partidos[partido].getEquipo2();
 
-    //Si el team no esta definido, defino y mapeo con un indice fila de la matriz.
-    if (teams_ref.find(team1) == teams_ref.end()) {
-      teams_ref[team1] = count_team;
-      count_team++;
-    }
-    if (teams_ref.find(team2) == teams_ref.end()) {
-      teams_ref[team2] = count_team;
-      count_team++;
-    }
+    int i = distance(_ordered_teams.begin(), _ordered_teams.find(stoi(team1)));
+    int j = distance(_ordered_teams.begin(), _ordered_teams.find(stoi(team2)));
 
-    int i = teams_ref[team1];
-    int j = teams_ref[team2];
     //Acumulo los partidos jugados
     totalJugados[i]++;
     totalJugados[j]++;
@@ -163,6 +147,7 @@ vector<ranking_t> Season::_calculateWPRanking(bool useLaplace) {
  */
 Season Season::parseDat(const string &path) {
   ifstream file (path);
+  if (file.fail()) throw "Archivo no encontrado";
   nat cantPartidos, cantEquipos;
   file >> cantEquipos >> cantPartidos;
 
@@ -170,14 +155,17 @@ Season Season::parseDat(const string &path) {
   string fecha, equipo1, equipo2;
   int p1, p2;
   nat i = 0;
+  set<int> ordered_teams = set<int>();
   while(i < cantPartidos && file >> fecha >> equipo1 >> p1 >> equipo2 >> p2) {
     partido p(fecha, equipo1, p1, equipo2, p2);
     partidos.push_back(p);
+    ordered_teams.insert(stoi(equipo1));
+    ordered_teams.insert(stoi(equipo2));
     i++;
   }
   file.close();
 
-  return Season(cantPartidos, cantEquipos, partidos);
+  return Season(cantPartidos, cantEquipos, partidos, ordered_teams);
 }
 
 #endif //TP1_SEASON_HPP

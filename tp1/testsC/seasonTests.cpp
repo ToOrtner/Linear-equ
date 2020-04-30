@@ -16,7 +16,7 @@ TEST(seasonGenerateMatrixTests, catedraTests) {
   vector<string> files = getCatedraTests();
   for (int i = 0; i < 1; i++) {
     string path = "../tests/" + files[i];
-    Season season = getSeason(path + ".in");
+    Season season = Season::parseDat(path + ".in");
 
     //Calculo el score con el metodo de CMM
     vector<ranking_t> rankings = season.calculateCMMRanking();
@@ -40,24 +40,6 @@ vector<ranking_t> getExpected(string expectedFile, int cantEquipos) {
     expectedRankings.push_back(score);
   }
   return expectedRankings;
-}
-
-Season getSeason(string testFile) {
-  ifstream file (testFile);
-  int cantPartidos, cantEquipos;
-  file >> cantEquipos >> cantPartidos;
-
-  vector<partido> partidos = vector<partido>();
-  string fecha, equipo1, equipo2;
-  int p1, p2;
-  int j = 0;
-  while(j < cantPartidos && file >> fecha >> equipo1 >> p1 >> equipo2 >> p2) {
-    partido p(fecha, equipo1, p1, equipo2, p2);
-    partidos.push_back(p);
-    j++;
-  }
-  file.close();
-  return Season(cantPartidos, cantEquipos, partidos);
 }
 
 vector<string> getCatedraTests() {
