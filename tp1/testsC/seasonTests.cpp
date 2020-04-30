@@ -10,7 +10,6 @@ DIR *dpdf;
 struct dirent *epdf;
 
 vector<string> getCatedraTests();
-Season getSeason(string testFile);
 vector<ranking_t> getExpected(string expectedFile, int cantEquipos);
 
 TEST(seasonGenerateMatrixTests, catedraTests) {
@@ -19,7 +18,7 @@ TEST(seasonGenerateMatrixTests, catedraTests) {
 
   vector<string> files = getCatedraTests();
   for (int i = 0; i < files.size(); i++) {
-    string path = "tests/" + files[i];
+    string path = files[i];
     Season season = Season::parseDat(path + ".in");
 
     //Calculo el score con el metodo de CMM
@@ -54,20 +53,23 @@ vector<ranking_t> getExpected(string expectedFile, int cantEquipos) {
 }
 
 vector<string> getCatedraTests() {
+  vector<const char*> dirs = {"tests/", "tests/test_completos/"};
   vector<string> files;
-  dpdf = opendir("tests");
-  if (dpdf != NULL) {
-    epdf = readdir(dpdf);
-    while (epdf) {
-      string file = epdf->d_name;
-      if(strstr(epdf->d_name, ".in")) {
-        //Guardo el nombre de todos los files en el directorio sin extension
-        string fileName = file.substr(0, file.find(".in"));
-        files.push_back(fileName);
-      }
+  for (const char* path : dirs) {
+    dpdf = opendir(path);
+    if (dpdf != NULL) {
       epdf = readdir(dpdf);
+      while (epdf) {
+        string file = epdf->d_name;
+        if (strstr(epdf->d_name, ".in")) {
+          //Guardo el nombre de todos los files en el directorio sin extension
+          string fileName = path + file.substr(0, file.find(".in"));
+          files.push_back(fileName);
+        }
+        epdf = readdir(dpdf);
+      }
     }
+    closedir(dpdf);
   }
-  closedir(dpdf);
   return files;
 }
