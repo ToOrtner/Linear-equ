@@ -10,11 +10,12 @@ DIR *dpdf;
 struct dirent *epdf;
 
 vector<string> getCatedraTests();
+
 vector<ranking_t> getExpected(string expectedFile, int cantEquipos);
 
 TEST(seasonGenerateMatrixTests, catedraTests) {
   ofstream archivo("exps/comparacionCuantitativo.csv", fstream::in | fstream::out | fstream::trunc);
-  archivo << "test, diff" << endl;
+  archivo << "id, test, diff" << endl;
 
   vector<string> files = getCatedraTests();
   for (int i = 0; i < files.size(); i++) {
@@ -36,13 +37,13 @@ TEST(seasonGenerateMatrixTests, catedraTests) {
       error += abs(rankings[j] - expectedRankings[j]);
     }
 
-    archivo << i << ", " << error << endl;
+    archivo << i << ", " << path.substr(path.find_last_of('/') + 1) << ", " << error << endl;
 
   }
 }
 
 vector<ranking_t> getExpected(string expectedFile, int cantEquipos) {
-  ifstream file (expectedFile);
+  ifstream file(expectedFile);
   vector<ranking_t> expectedRankings;
   for (int i = 0; i < cantEquipos; i++) {
     ranking_t score;
@@ -53,9 +54,9 @@ vector<ranking_t> getExpected(string expectedFile, int cantEquipos) {
 }
 
 vector<string> getCatedraTests() {
-  vector<const char*> dirs = {"tests/", "tests/test_completos/"};
+  vector<const char *> dirs = {"tests/", "tests/test_completos/"};
   vector<string> files;
-  for (const char* path : dirs) {
+  for (const char *path : dirs) {
     dpdf = opendir(path);
     if (dpdf != NULL) {
       epdf = readdir(dpdf);
