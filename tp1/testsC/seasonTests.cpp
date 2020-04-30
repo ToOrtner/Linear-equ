@@ -1,6 +1,7 @@
 #include "include/gtest/gtest.h"
 #include <fstream>
 #include <dirent.h>
+#include <cmath>
 #include "string"
 #include "expecteds.h"
 #include "../src/c++/Season.hpp"
@@ -13,9 +14,12 @@ Season getSeason(string testFile);
 vector<ranking_t> getExpected(string expectedFile, int cantEquipos);
 
 TEST(seasonGenerateMatrixTests, catedraTests) {
+  ofstream archivo("exps/comparacionCuantitativo.csv", fstream::in | fstream::out | fstream::trunc);
+  archivo << "test, diff" << endl;
+
   vector<string> files = getCatedraTests();
-  for (int i = 0; i < 1; i++) {
-    string path = "../tests/" + files[i];
+  for (int i = 0; i < files.size(); i++) {
+    string path = "tests/" + files[i];
     Season season = Season::parseDat(path + ".in");
 
     //Calculo el score con el metodo de CMM
@@ -27,6 +31,13 @@ TEST(seasonGenerateMatrixTests, catedraTests) {
     std::sort(rankings.begin(), rankings.end());
     std::sort(expectedRankings.begin(), expectedRankings.end());
     EXPECT_VECTOR_FLOATS_NEARLY_EQ(rankings, expectedRankings, precision);
+
+    ranking_t error = 0;
+    for (int j = 0; j < rankings.size(); ++j) {
+      error += abs(rankings[j] - expectedRankings[j]);
+    }
+
+    archivo << i << ", " << error << endl;
 
   }
 }
@@ -44,7 +55,7 @@ vector<ranking_t> getExpected(string expectedFile, int cantEquipos) {
 
 vector<string> getCatedraTests() {
   vector<string> files;
-  dpdf = opendir("../tests");
+  dpdf = opendir("tests");
   if (dpdf != NULL) {
     epdf = readdir(dpdf);
     while (epdf) {
