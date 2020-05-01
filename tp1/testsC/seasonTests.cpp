@@ -15,7 +15,9 @@ vector<ranking_t> getExpected(string expectedFile, int cantEquipos);
 
 TEST(seasonGenerateMatrixTests, catedraTests) {
   ofstream archivo("exps/comparacionCuantitativo.csv", fstream::in | fstream::out | fstream::trunc);
-  archivo << "id, test, diff" << endl;
+  archivo << "id, test, cantEquipos, diff" << endl;
+  archivo.precision(14);
+  archivo << std::fixed;
 
   vector<string> files = getCatedraTests();
   for (int i = 0; i < files.size(); i++) {
@@ -36,8 +38,9 @@ TEST(seasonGenerateMatrixTests, catedraTests) {
     for (int j = 0; j < rankings.size(); ++j) {
       error += abs(rankings[j] - expectedRankings[j]);
     }
+    error /= rankings.size();
 
-    archivo << i << ", " << path.substr(path.find_last_of('/') + 1) << ", " << error << endl;
+    archivo << i << ", " << path.substr(path.find_last_of('/') + 1) << ", " << season.getCantEquipos()  << ", " << error << endl;
 
   }
 }
