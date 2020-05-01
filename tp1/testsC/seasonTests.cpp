@@ -46,7 +46,7 @@ TEST(compareTests, CMMvsCatedraTests) {
 
 TEST(compareMethodsWithNBA, diffsBetweenMethods) {
   ofstream archivo("exps/comparacionMethods.csv", fstream::in | fstream::out | fstream::trunc);
-  archivo << "pos, nombre, CMM, WP, WPL" << endl;
+  archivo << "nombre, CMM, WP, WPL" << endl;
   string path = "data/nba_2016_scores.dat";
 
   //Creo el Season para calcular los rankings
@@ -64,7 +64,7 @@ TEST(compareMethodsWithNBA, diffsBetweenMethods) {
   getPlayerMap(playersMap, "data/nba_2016_teams.csv");
 
   for (int i = 0; i < rankingsWP.size(); ++i) {
-    archivo << i << ", " << playersMap[i] << ", " << rankingsCMM[i] << ", " << rankingsWP[i] << ", " << rankingsWPL[i] << endl;
+    archivo << playersMap[i] << ", " << rankingsCMM[i] << ", " << rankingsWP[i] << ", " << rankingsWPL[i] << endl;
   }
 
   archivo.close();
