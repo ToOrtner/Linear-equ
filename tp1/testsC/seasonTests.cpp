@@ -29,9 +29,6 @@ TEST(seasonGenerateMatrixTests, catedraTests) {
     //Busco los resultados esperados
     vector<ranking_t> expectedRankings = getExpected(path + ".expected", season.getCantEquipos());
 
-    //Ordeno de menor a mayor para poder comparar los rankings, ya que los equipos pueden estar en cualquier orden
-    std::sort(rankings.begin(), rankings.end());
-    std::sort(expectedRankings.begin(), expectedRankings.end());
     EXPECT_VECTOR_FLOATS_NEARLY_EQ(rankings, expectedRankings, precision);
 
     ranking_t error = 0;
