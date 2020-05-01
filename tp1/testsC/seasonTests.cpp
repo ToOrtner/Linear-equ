@@ -12,8 +12,9 @@ struct dirent *epdf;
 vector<string> getCatedraTests();
 
 vector<ranking_t> getExpected(string expectedFile, int cantEquipos);
+void getPlayerMap(vector<string> &playerMap, string path);
 
-TEST(seasonGenerateMatrixTests, catedraTests) {
+TEST(compareTests, CMMvsCatedraTests) {
   ofstream archivo("exps/comparacionCuantitativo.csv", fstream::in | fstream::out | fstream::trunc);
   archivo << "id, test, cantEquipos, diff" << endl;
   archivo.precision(14);
@@ -39,6 +40,45 @@ TEST(seasonGenerateMatrixTests, catedraTests) {
 
     archivo << i << ", " << path.substr(path.find_last_of('/') + 1) << ", " << season.getCantEquipos()  << ", " << error << endl;
 
+  }
+  archivo.close();
+}
+
+TEST(compareMethodsWithNBA, diffsBetweenMethods) {
+  ofstream archivo("exps/comparacionMethods.csv", fstream::in | fstream::out | fstream::trunc);
+  archivo << "pos, nombre, CMM, WP, WPL" << endl;
+  string path = "data/nba_2016_scores.dat";
+
+  //Creo el Season para calcular los rankings
+  Season season = Season::parseDat(path);
+
+  //Calculo el score con los metodos
+  vector<ranking_t> rankingsCMM = season.calculateCMMRanking();
+  vector<ranking_t> rankingsWP = season.calculateWPRanking();
+  vector<ranking_t> rankingsWPL = season.calculateWPRankingWithLaplace();
+
+  EXPECT_EQ(rankingsCMM.size(), rankingsWP.size());
+  EXPECT_EQ(rankingsWPL.size(), rankingsWP.size());
+
+  vector<string> playersMap;
+  getPlayerMap(playersMap, "data/nba_2016_teams.csv");
+
+  for (int i = 0; i < rankingsWP.size(); ++i) {
+    archivo << i << ", " << playersMap[i] << ", " << rankingsCMM[i] << ", " << rankingsWP[i] << ", " << rankingsWPL[i] << endl;
+  }
+
+  archivo.close();
+}
+
+void getPlayerMap(vector<string> &players, string path) {
+  ifstream teamsCsv(path, fstream::out);
+  if (teamsCsv.fail()) throw std::runtime_error("Error al leer el archivo");
+  string line;
+  while(std::getline(teamsCsv, line)) {
+    string name;
+    int split_in = line.find_first_of(',');
+    name = line.substr(split_in + 2);
+    players.push_back(name);
   }
 }
 

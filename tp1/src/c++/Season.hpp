@@ -147,7 +147,7 @@ vector<ranking_t> Season::_calculateWPRanking(bool useLaplace) {
  */
 Season Season::parseDat(const string &path) {
   ifstream file (path);
-  if (file.fail()) throw "Archivo no encontrado";
+  if (file.fail()) throw std::runtime_error("Archivo no encontrado");
   nat cantPartidos, cantEquipos;
   file >> cantEquipos >> cantPartidos;
 
