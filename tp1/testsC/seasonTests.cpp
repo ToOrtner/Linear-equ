@@ -13,6 +13,7 @@ vector<string> getCatedraTests();
 
 vector<ranking_t> getExpected(string expectedFile, int cantEquipos);
 void getPlayerMap(vector<string> &playerMap, string path);
+void generateDiffFiles(int methodInt);
 
 TEST(compareTests, CMMvsCatedraTests) {
   ofstream archivo("exps/comparacionCuantitativo.csv", fstream::in | fstream::out | fstream::trunc);
@@ -44,6 +45,12 @@ TEST(compareTests, CMMvsCatedraTests) {
   archivo.close();
 }
 
+TEST(compareTests, WPvsCatedraTests) {
+  // Genero los files con las diferencias de medicion de los metodos WP y WP con laplace
+  generateDiffFiles(0);
+  generateDiffFiles(1);
+}
+
 TEST(compareMethodsWithNBA, diffsBetweenMethods) {
   ofstream archivo("exps/comparacionMethods.csv", fstream::in | fstream::out | fstream::trunc);
   archivo << "nombre, CMM, WP, WPL" << endl;
@@ -67,6 +74,51 @@ TEST(compareMethodsWithNBA, diffsBetweenMethods) {
     archivo << playersMap[i] << ", " << rankingsCMM[i] << ", " << rankingsWP[i] << ", " << rankingsWPL[i] << endl;
   }
 
+  archivo.close();
+}
+
+void generateDiffFiles(int methodInt) {
+  vector<string> methods = {".wp", ".wpl"};
+  string method = methods[methodInt];
+
+  ofstream archivo("exps/comparacionCuantitativo" + method + ".csv", fstream::in | fstream::out | fstream::trunc);
+  archivo << "id, test, cantEquipos, diff" << endl;
+  archivo.precision(14);
+  archivo << std::fixed;
+
+  vector<string> files = getCatedraTests();
+  // Saco los que no se tienen expected
+  for (int k = 0; k < 4; ++k) files.pop_back();
+
+  for (int i = 0; i < files.size(); i++) {
+    string path = files[i];
+    Season season = Season::parseDat(path + ".in");
+
+    //Calculo el score con el metodo de CMM
+    vector<ranking_t> rankings;// = season.calculateCMMRanking();
+    switch (methodInt) {
+      case 0:
+        rankings = season.calculateWPRanking();
+        break;
+      case 1:
+        rankings = season.calculateWPRankingWithLaplace();
+        break;
+    }
+
+    //Busco los resultados esperados
+    vector<ranking_t> expectedRankings = getExpected(path + method + ".expected", season.getCantEquipos());
+
+    EXPECT_VECTOR_FLOATS_NEARLY_EQ(rankings, expectedRankings, precision);
+
+    ranking_t error = 0;
+    for (int j = 0; j < rankings.size(); ++j) {
+      error += abs(rankings[j] - expectedRankings[j]);
+    }
+    error /= rankings.size();
+
+    archivo << i << ", " << path.substr(path.find_last_of('/') + 1) << ", " << season.getCantEquipos()  << ", " << error << endl;
+
+  }
   archivo.close();
 }
 

@@ -1,10 +1,6 @@
-id,test,cantEquipos,diff
+id, test, cantEquipos, diff
 0, test1, 6, 0.00000001280866
 1, test-prob-2, 6, 0.00000000952300
 2, test-prob-1, 6, 0.00000001254863
 3, test2, 6, 0.00000001489541
 4, test_completo_10_1, 10, 0.00000000538957
-5, test_completo_1000_2, 1000, 0.00001493596596
-6, test_completo_1000_8, 1000, 0.00006738284039
-7, test_completo_100_8, 100, 0.00000246762399
-8, test_completo_100_4, 100, 0.00000082638561
