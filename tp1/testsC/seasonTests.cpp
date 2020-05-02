@@ -17,7 +17,7 @@ void generateDiffFiles(int methodInt);
 
 TEST(compareTests, CMMvsCatedraTests) {
   ofstream archivo("exps/comparacionCuantitativo.csv", fstream::in | fstream::out | fstream::trunc);
-  archivo << "id, test, cantEquipos, diff" << endl;
+  archivo << "id, test, cantEquipos, cantPartidos, diff" << endl;
   archivo.precision(14);
   archivo << std::fixed;
 
@@ -39,7 +39,8 @@ TEST(compareTests, CMMvsCatedraTests) {
     }
     error /= rankings.size();
 
-    archivo << i << ", " << path.substr(path.find_last_of('/') + 1) << ", " << season.getCantEquipos()  << ", " << error << endl;
+    archivo << i << ", " << path.substr(path.find_last_of('/') + 1) << ", ";
+    archivo << season.getCantEquipos()  << ", " << season.getCantPartidos() << ", " << error << endl;
 
   }
   archivo.close();
@@ -82,7 +83,7 @@ void generateDiffFiles(int methodInt) {
   string method = methods[methodInt];
 
   ofstream archivo("exps/comparacionCuantitativo" + method + ".csv", fstream::in | fstream::out | fstream::trunc);
-  archivo << "id, test, cantEquipos, diff" << endl;
+  archivo << "id, test, cantEquipos, cantPartidos, diff" << endl;
   archivo.precision(14);
   archivo << std::fixed;
 
@@ -116,7 +117,8 @@ void generateDiffFiles(int methodInt) {
     }
     error /= rankings.size();
 
-    archivo << i << ", " << path.substr(path.find_last_of('/') + 1) << ", " << season.getCantEquipos()  << ", " << error << endl;
+    archivo << i << ", " << path.substr(path.find_last_of('/') + 1) << ", ";
+    archivo << season.getCantEquipos()  << ", " << season.getCantPartidos() << ", " << error << endl;
 
   }
   archivo.close();
