@@ -17,16 +17,6 @@ add_executable(
     src/c++/Season.hpp
 )
 
-#add_executable(
-#    correrExps
-#    testsC/experimentos.cpp
-#    src/c++/partido.cpp
-#    src/c++/partido.h
-#    src/c++/funciones.hpp
-#    src/c++/defines.h
-#    src/c++/Season.hpp
-#)
-
 add_executable(elimGaussTests ${SOURCE_FILES} testsC/elimGaussTests.cpp testsC/expecteds.h)
 add_executable(solveSystemTests ${SOURCE_FILES} testsC/solveSystemTests.cpp testsC/expecteds.h)
 add_executable(seasonTests ${SOURCE_FILES} testsC/seasonTests.cpp testsC/expecteds.h src/c++/partido.h src/c++/partido.cpp)
@@ -36,7 +26,3 @@ add_executable(seasonTests ${SOURCE_FILES} testsC/seasonTests.cpp testsC/expecte
 target_link_libraries(elimGaussTests gtest gtest_main)
 target_link_libraries(solveSystemTests gtest gtest_main)
 target_link_libraries(seasonTests gtest gtest_main)
-
-
-# Test suites a ejecutar
-add_test(correrTests elimGaussTests seasonTests solveSystemTests seasonTests tp1)
