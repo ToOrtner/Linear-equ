@@ -96,7 +96,7 @@ void generateDiffFiles(int methodInt) {
     Season season = Season::parseDat(path + ".in");
 
     //Calculo el score con el metodo de CMM
-    vector<ranking_t> rankings;// = season.calculateCMMRanking();
+    vector<ranking_t> rankings;
     switch (methodInt) {
       case 0:
         rankings = season.calculateWPRanking();
