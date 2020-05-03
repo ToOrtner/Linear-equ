@@ -38,3 +38,7 @@ Para generar los datos para los experimentos ejecutar:
 ```bash
 $ ./seasonTests
 ```
+
+Para crear las tablas que se muestran en el informe, usamos jupyter-notebook ubicado dentro de exps/exps.ipynb
+
+Importante! Correr el seasonTests antes de esto, ya que el archivo de exps usa los archivos generados por estos tests.
