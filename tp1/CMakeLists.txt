@@ -5,6 +5,7 @@ include_directories(google-test)
 add_subdirectory(google-test)
 
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "-O3")
 
 add_executable(
     tp1
