@@ -8,3 +8,10 @@
 **/*.cbp
 **/CMakeScripts
 **/compile_commands.json
+correrExps
+elimGaussTests
+seasonTests
+solveSystemTests
+tp1
+google-test/libgtest.a
+google-test/libgtest_main.a
