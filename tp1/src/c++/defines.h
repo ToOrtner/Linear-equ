@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <utility>
-#include "partido.h"
 
 using namespace std;
 

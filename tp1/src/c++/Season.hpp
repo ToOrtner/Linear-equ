@@ -5,6 +5,8 @@
 #include "vector"
 #include "defines.h"
 #include "funciones.hpp"
+#include <fstream>
+#include "partido.h"
 #include <set>
 
 using namespace std;
