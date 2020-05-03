@@ -1,9 +1,11 @@
-#Para compilar el programa, desde una consola ejecutar:
+## Para compilar el programa, desde una consola ejecutar:
 
+```bash
 $ sudo apt-get install libgtest-dev
 $ sudo apt-get install cmake # install cmake
 $ cmake CMakeLists.txt
 $ make
+```
 
 - libgtest-dev son las librerias de testing.
 - cmake para generar el Makefile
@@ -12,9 +14,10 @@ $ make
     - seasonTests genera datos para los experimentos
     - elimGaussTests, solveSystemTests para testear el programa
 
-#Para correr el programa, desde la misma consola ejecutar:
-
+## Para correr el programa, desde la misma consola ejecutar:
+```bash
 $ ./tp1 input_file.dat output_file method
+```
 
 donde:
     input_file.dat es el archivo de entrada, con el formato correspondiente.
@@ -25,10 +28,13 @@ donde:
         2: para ejecutar con el método WPL
 
 
-#Para correr los test ejecutar:
-
+## Para correr los test ejecutar:
+```bash
 $ ./elimGaussTests
 $ ./solveSystemTests
+```
 
 Para generar los datos para los experimentos ejecutar:
+```bash
 $ ./seasonTests
+```
