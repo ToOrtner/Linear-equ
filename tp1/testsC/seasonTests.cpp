@@ -87,7 +87,7 @@ void generateDiffFiles(int methodInt) {
   archivo.precision(14);
   archivo << std::fixed;
 
-  vector<string> files = getCatedraTests();
+  vector<string> files = { "tests/test1", "tests/test-prob-2", "tests/test-prob-1", "tests/test2", "tests/test_completos/test_completo_10_1" };
   // Saco los que no se tienen expected
   for (int k = 0; k < 4; ++k) files.pop_back();
 
