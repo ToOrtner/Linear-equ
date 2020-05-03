@@ -26,15 +26,12 @@ add_executable(
     src/c++/Season.hpp
 )
 
-add_executable(correrTests ${SOURCE_FILES} testsC/elimGaussTests.cpp testsC/seasonTests.cpp testsC/solveSystemTests.cpp testsC/expecteds.h testsC/experimentos.cpp)
-
 add_executable(elimGaussTests ${SOURCE_FILES} testsC/elimGaussTests.cpp testsC/expecteds.h)
 add_executable(solveSystemTests ${SOURCE_FILES} testsC/solveSystemTests.cpp testsC/expecteds.h)
 add_executable(seasonTests ${SOURCE_FILES} testsC/seasonTests.cpp testsC/expecteds.h src/c++/partido.h src/c++/partido.cpp)
 
 
 # Necesitamos asociar los archivos del framework de testing
-target_link_libraries(correrTests gtest gtest_main)
 target_link_libraries(elimGaussTests gtest gtest_main)
 target_link_libraries(solveSystemTests gtest gtest_main)
 target_link_libraries(seasonTests gtest gtest_main)

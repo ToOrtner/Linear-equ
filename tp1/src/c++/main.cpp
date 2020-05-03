@@ -6,6 +6,7 @@
 #include "Season.hpp"
 
 using namespace std;
+void saveResult(string outputPath, vector<ranking_t> rankings);
 
 int main(int argc, char* argv[]) {
   string inputPath = argv[1];
@@ -40,4 +41,18 @@ int main(int argc, char* argv[]) {
   saveResult(outputPath, rankings);
 
   return 0;
+}
+
+/**
+ * Export ranking table in outputPath.
+ * @param outputPath
+ * @param rankings
+ */
+void saveResult(string outputPath, vector<ranking_t> rankings) {
+  ofstream file(outputPath);
+  file.precision(FILE_PRESITION);
+  for (int i = 0; i < rankings.size(); ++i) {
+    file << rankings[i] << endl;
+  }
+  file.close();
 }

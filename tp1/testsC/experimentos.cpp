@@ -1,17 +1,18 @@
 #include <chrono>
 #include <iostream>
 #include <string>
-#include <vector>
-#include <tuple>
 #include <fstream>
 #include "../src/c++/defines.h"
-#include "../src/c++/partido.h"
 #include "../src/c++/Season.hpp"
 
-static const string FILE_OUTPUT_DELTA_PREFIX =  "exps/output_";
+static const string FILE_OUTPUT_DELTA_PREFIX = "exps/output_";
+
 void correrCMM();
+
 void correrWP();
+
 void correrLaplace();
+
 void compararTiempos();
 
 int main() {
@@ -25,7 +26,8 @@ int main() {
 
 void correrCMM() {
   Season season = Season::parseDat("data/atp_matches_2015.dat");
-  string file_name = FILE_OUTPUT_DELTA_PREFIX + "_CMM_" + to_string(season.getCantPartidos()) + "_" + to_string(season.getCantEquipos()) + ".csv";
+  string file_name = FILE_OUTPUT_DELTA_PREFIX + "_CMM_" + to_string(season.getCantPartidos()) + "_" +
+                     to_string(season.getCantEquipos()) + ".csv";
 
   //Output file
   ofstream outputFile;
@@ -45,11 +47,12 @@ void correrCMM() {
 
 void correrWP() {
   Season season = Season::parseDat("data/atp_matches_2015.dat");
-  string file_name = FILE_OUTPUT_DELTA_PREFIX + "_WP_" + to_string(season.getCantPartidos()) + "_" + to_string(season.getCantEquipos()) + ".csv";
+  string file_name = FILE_OUTPUT_DELTA_PREFIX + "_WP_" + to_string(season.getCantPartidos()) + "_" +
+                     to_string(season.getCantEquipos()) + ".csv";
 
   //Output file
   ofstream outputFile;
-  outputFile.open (file_name, fstream::in | fstream::out | fstream::trunc);
+  outputFile.open(file_name, fstream::in | fstream::out | fstream::trunc);
   outputFile << "tiempo" << endl;
 
   //Contabilizo el tiempo por las dudas
@@ -58,18 +61,19 @@ void correrWP() {
   auto end = chrono::steady_clock::now();
 
   auto timeElapsed = end - start;
-  outputFile << chrono::duration <double, milli>(timeElapsed).count() << endl;
+  outputFile << chrono::duration<double, milli>(timeElapsed).count() << endl;
 
   outputFile.close();
 }
 
 void correrLaplace() {
   Season season = Season::parseDat("data/atp_matches_2015.dat");
-  string file_name = FILE_OUTPUT_DELTA_PREFIX + "_Laplace_" + to_string(season.getCantPartidos()) + "_" + to_string(season.getCantEquipos()) + ".csv";
+  string file_name = FILE_OUTPUT_DELTA_PREFIX + "_Laplace_" + to_string(season.getCantPartidos()) + "_" +
+                     to_string(season.getCantEquipos()) + ".csv";
 
   //Output file
   ofstream outputFile;
-  outputFile.open (file_name, fstream::in | fstream::out | fstream::trunc);
+  outputFile.open(file_name, fstream::in | fstream::out | fstream::trunc);
   outputFile << "tiempo" << endl;
 
   //Contabilizo el tiempo por las dudas
@@ -78,12 +82,12 @@ void correrLaplace() {
   auto end = chrono::steady_clock::now();
 
   auto timeElapsed = end - start;
-  outputFile << chrono::duration <double, milli>(timeElapsed).count() << endl;
+  outputFile << chrono::duration<double, milli>(timeElapsed).count() << endl;
 
   outputFile.close();
 }
 
-void compararTiempos(){
+void compararTiempos() {
   ofstream archivo;  // objeto de la clase ofstream
   archivo.open("exps/comparacionTiempos.csv", fstream::in | fstream::out | fstream::trunc);
   archivo << "n,CMM,WP,Laplace" << endl;
@@ -106,7 +110,7 @@ void compararTiempos(){
   auto time_end_Lapla = std::chrono::steady_clock::now();
   auto timeLapla = chrono::duration_cast<std::chrono::milliseconds>(time_end_Lapla - time_start_Lapla).count();
 
-  archivo << n << "," << timeCMM << "," << timeWP << ","  << timeLapla << endl;
+  archivo << n << "," << timeCMM << "," << timeWP << "," << timeLapla << endl;
 
   archivo.close();
 }
