@@ -1,5 +1,6 @@
 #include <vector>
 #include <fstream>
+#include "iostream"
 #include "partido.h"
 #include "defines.h"
 #include "Season.hpp"
@@ -8,6 +9,12 @@ using namespace std;
 void saveResult(string outputPath, vector<ranking_t> rankings);
 
 int main(int argc, char* argv[]) {
+
+  if(argc < 4) {
+    cout << "Cantida de argumentos erronea" << endl;
+    return -1;
+  }
+
   string inputPath = argv[1];
   string outputPath = argv[2];
   int method = stoi(argv[3]);
